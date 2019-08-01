@@ -1,0 +1,18 @@
+#
+# Dockerfile to run locally, including nextjs service & nginx/php
+# accessable as http://localhost:8080
+#
+version: '2'
+services:
+  php:
+    build: ./.deploy/docker-local
+    volumes:
+      # codebase
+      - ./:/srv
+
+      # config files, as used on live
+      - ./.deploy/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
+      - ./.deploy/www.conf:/etc/php/7.2/fpm/pool.d/www.conf
+
+    ports:
+      - "80:80"
